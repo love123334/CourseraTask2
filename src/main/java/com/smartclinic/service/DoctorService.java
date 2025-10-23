@@ -25,7 +25,7 @@ public class DoctorService {
      */
     public List<LocalTime> getAvailableTimeSlots(Long doctorId, LocalDate date) {
         Optional<Doctor> doctorOpt = doctorRepository.findById(doctorId);
-        if (doctorOpt.isEmpty()) {
+        if (doctorOpt.isPresent() == false) {
             return new ArrayList<>();
         }
         

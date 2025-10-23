@@ -58,7 +58,7 @@ public class PrescriptionController {
         try {
             // Get doctor from token
             Optional<Doctor> doctorOpt = doctorService.findByEmail(email);
-            if (doctorOpt.isEmpty()) {
+            if (doctorOpt.isPresent() == false) {
                 response.put("success", false);
                 response.put("message", "Doctor not found");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
@@ -69,7 +69,7 @@ public class PrescriptionController {
             // Get patient
             Long patientId = Long.valueOf(prescriptionRequest.get("patientId").toString());
             Optional<Patient> patientOpt = patientService.findById(patientId);
-            if (patientOpt.isEmpty()) {
+            if (patientOpt.isPresent() == false) {
                 response.put("success", false);
                 response.put("message", "Patient not found");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
@@ -123,7 +123,7 @@ public class PrescriptionController {
         
         try {
             Optional<Patient> patientOpt = patientService.findById(patientId);
-            if (patientOpt.isEmpty()) {
+            if (patientOpt.isPresent() == false) {
                 response.put("success", false);
                 response.put("message", "Patient not found");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
@@ -166,7 +166,7 @@ public class PrescriptionController {
         
         try {
             Optional<Doctor> doctorOpt = doctorService.findByEmail(email);
-            if (doctorOpt.isEmpty()) {
+            if (doctorOpt.isPresent() == false) {
                 response.put("success", false);
                 response.put("message", "Doctor not found");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);

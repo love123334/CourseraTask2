@@ -60,7 +60,7 @@ public class AppointmentController {
         try {
             // Get patient from token
             Optional<Patient> patientOpt = patientService.findByEmail(email);
-            if (patientOpt.isEmpty()) {
+            if (patientOpt.isPresent() == false) {
                 response.put("success", false);
                 response.put("message", "Patient not found");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
@@ -71,7 +71,7 @@ public class AppointmentController {
             // Get doctor
             Long doctorId = Long.valueOf(appointmentRequest.get("doctorId").toString());
             Optional<Doctor> doctorOpt = doctorService.findByEmail(doctorService.getAllDoctors().get(doctorId.intValue() - 1).getEmail());
-            if (doctorOpt.isEmpty()) {
+            if (doctorOpt.isPresent() == false) {
                 response.put("success", false);
                 response.put("message", "Doctor not found");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
@@ -138,7 +138,7 @@ public class AppointmentController {
         
         try {
             Optional<Patient> patientOpt = patientService.findByEmail(email);
-            if (patientOpt.isEmpty()) {
+            if (patientOpt.isPresent() == false) {
                 response.put("success", false);
                 response.put("message", "Patient not found");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
@@ -181,7 +181,7 @@ public class AppointmentController {
         
         try {
             Optional<Doctor> doctorOpt = doctorService.findByEmail(email);
-            if (doctorOpt.isEmpty()) {
+            if (doctorOpt.isPresent() == false) {
                 response.put("success", false);
                 response.put("message", "Doctor not found");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
@@ -226,7 +226,7 @@ public class AppointmentController {
         
         try {
             Optional<Doctor> doctorOpt = doctorService.findByEmail(email);
-            if (doctorOpt.isEmpty()) {
+            if (doctorOpt.isPresent() == false) {
                 response.put("success", false);
                 response.put("message", "Doctor not found");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);

@@ -188,7 +188,7 @@ public class AdminController {
         
         try {
             Optional<Doctor> doctorOpt = doctorService.findByEmail(doctorService.getAllDoctors().get(doctorId.intValue() - 1).getEmail());
-            if (doctorOpt.isEmpty()) {
+            if (doctorOpt.isPresent() == false) {
                 response.put("success", false);
                 response.put("message", "Doctor not found");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);

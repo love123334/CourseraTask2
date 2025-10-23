@@ -143,7 +143,7 @@ public class PatientController {
         
         try {
             Optional<Patient> patientOpt = patientService.findByEmail(email);
-            if (patientOpt.isEmpty()) {
+            if (patientOpt.isPresent() == false) {
                 response.put("success", false);
                 response.put("message", "Patient not found");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
