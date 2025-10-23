@@ -83,4 +83,13 @@ public class PatientService {
     public boolean existsByPhoneNumber(String phoneNumber) {
         return patientRepository.existsByPhoneNumber(phoneNumber);
     }
+    
+    /**
+     * Finds patient by ID
+     * @param id Patient ID
+     * @return Optional Patient
+     */
+    public Optional<Patient> findById(Long id) {
+        return patientRepository.findById(id);
+    }
 }

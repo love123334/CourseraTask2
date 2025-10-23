@@ -68,7 +68,7 @@ public class PrescriptionController {
             
             // Get patient
             Long patientId = Long.valueOf(prescriptionRequest.get("patientId").toString());
-            Optional<Patient> patientOpt = patientService.findByEmail(patientService.findById(patientId).get().getEmail());
+            Optional<Patient> patientOpt = patientService.findById(patientId);
             if (patientOpt.isEmpty()) {
                 response.put("success", false);
                 response.put("message", "Patient not found");
@@ -122,7 +122,7 @@ public class PrescriptionController {
         }
         
         try {
-            Optional<Patient> patientOpt = patientService.findByEmail(patientService.findById(patientId).get().getEmail());
+            Optional<Patient> patientOpt = patientService.findById(patientId);
             if (patientOpt.isEmpty()) {
                 response.put("success", false);
                 response.put("message", "Patient not found");
