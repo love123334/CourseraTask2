@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Clinic - Doctor Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .logo p {
+            color: #666;
+            font-size: 1.1em;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #4facfe;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .error {
+            color: #e74c3c;
+            text-align: center;
+            margin-top: 15px;
+            padding: 10px;
+            background: #fdf2f2;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .success {
+            color: #27ae60;
+            text-align: center;
+            margin-top: 15px;
+            padding: 10px;
+            background: #f0f9f0;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .dashboard {
+            display: none;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 1200px;
+        }
+        
+        .dashboard h1 {
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e1e5e9;
+        }
+        
+        .nav-tab {
+            padding: 15px 30px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-tab.active {
+            color: #4facfe;
+            border-bottom-color: #4facfe;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .table th,
+        .table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e1e5e9;
+        }
+        
+        .table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .btn-small {
+            padding: 8px 16px;
+            background: #4facfe;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .btn-small:hover {
+            background: #3d8bfe;
+        }
+        
+        .logout {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .status-scheduled {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-confirmed {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .status-completed {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="loginContainer">
+        <div class="logo">
+            <h1>👨‍⚕️ Smart Clinic</h1>
+            <p>Doctor Portal</p>
+        </div>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            
+            <button type="submit" class="btn">Login</button>
+        </form>
+        
+        <div class="error" id="errorMessage"></div>
+        <div class="success" id="successMessage"></div>
+    </div>
+    
+    <div class="dashboard" id="dashboard">
+        <button class="logout" onclick="logout()">Logout</button>
+        <h1>Doctor Dashboard</h1>
+        
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('appointments')">My Appointments</button>
+            <button class="nav-tab" onclick="showTab('prescriptions')">Prescriptions</button>
+        </div>
+        
+        <div id="appointments" class="tab-content active">
+            <h2>My Appointments</h2>
+            <div class="form-group">
+                <label for="appointmentDate">Filter by Date</label>
+                <input type="date" id="appointmentDate" onchange="filterAppointments()">
+            </div>
+            <table class="table" id="appointmentsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Patient Name</th>
+                        <th>Appointment Time</th>
+                        <th>Status</th>
+                        <th>Notes</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="appointmentsTableBody">
+                </tbody>
+            </table>
+        </div>
+        
+        <div id="prescriptions" class="tab-content">
+            <h2>Prescriptions</h2>
+            <table class="table" id="prescriptionsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Patient Name</th>
+                        <th>Medication</th>
+                        <th>Dosage</th>
+                        <th>Instructions</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody id="prescriptionsTableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script>
+        let authToken = null;
+        let currentDoctor = null;
+        
+        // Login form submission
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                const response = await fetch('/api/doctors/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    authToken = data.token;
+                    currentDoctor = data.doctor;
+                    document.getElementById('loginContainer').style.display = 'none';
+                    document.getElementById('dashboard').style.display = 'block';
+                    loadAppointments();
+                    loadPrescriptions();
+                } else {
+                    showError(data.message);
+                }
+            } catch (error) {
+                showError('Login failed. Please try again.');
+            }
+        });
+        
+        // Load appointments
+        async function loadAppointments() {
+            try {
+                const response = await fetch('/api/appointments/doctor', {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    const tbody = document.getElementById('appointmentsTableBody');
+                    tbody.innerHTML = '';
+                    
+                    data.appointments.forEach(appointment => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${appointment.id}</td>
+                            <td>${appointment.patient.firstName} ${appointment.patient.lastName}</td>
+                            <td>${new Date(appointment.appointmentTime).toLocaleString()}</td>
+                            <td><span class="status-badge status-${appointment.status.toLowerCase()}">${appointment.status}</span></td>
+                            <td>${appointment.notes || 'N/A'}</td>
+                            <td>
+                                <button class="btn-small" onclick="updateAppointmentStatus(${appointment.id}, 'CONFIRMED')">Confirm</button>
+                                <button class="btn-small" onclick="updateAppointmentStatus(${appointment.id}, 'COMPLETED')">Complete</button>
+                            </td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading appointments:', error);
+            }
+        }
+        
+        // Load prescriptions
+        async function loadPrescriptions() {
+            try {
+                const response = await fetch('/api/prescriptions/doctor', {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    const tbody = document.getElementById('prescriptionsTableBody');
+                    tbody.innerHTML = '';
+                    
+                    data.prescriptions.forEach(prescription => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${prescription.id}</td>
+                            <td>${prescription.patient.firstName} ${prescription.patient.lastName}</td>
+                            <td>${prescription.medicationName}</td>
+                            <td>${prescription.dosage}</td>
+                            <td>${prescription.instructions}</td>
+                            <td>${new Date(prescription.prescriptionDate).toLocaleDateString()}</td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading prescriptions:', error);
+            }
+        }
+        
+        // Filter appointments by date
+        function filterAppointments() {
+            const selectedDate = document.getElementById('appointmentDate').value;
+            if (selectedDate) {
+                loadAppointmentsByDate(selectedDate);
+            } else {
+                loadAppointments();
+            }
+        }
+        
+        // Load appointments by date
+        async function loadAppointmentsByDate(date) {
+            try {
+                const response = await fetch(`/api/appointments/doctor/date/${date}`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    const tbody = document.getElementById('appointmentsTableBody');
+                    tbody.innerHTML = '';
+                    
+                    data.appointments.forEach(appointment => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${appointment.id}</td>
+                            <td>${appointment.patient.firstName} ${appointment.patient.lastName}</td>
+                            <td>${new Date(appointment.appointmentTime).toLocaleString()}</td>
+                            <td><span class="status-badge status-${appointment.status.toLowerCase()}">${appointment.status}</span></td>
+                            <td>${appointment.notes || 'N/A'}</td>
+                            <td>
+                                <button class="btn-small" onclick="updateAppointmentStatus(${appointment.id}, 'CONFIRMED')">Confirm</button>
+                                <button class="btn-small" onclick="updateAppointmentStatus(${appointment.id}, 'COMPLETED')">Complete</button>
+                            </td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading appointments by date:', error);
+            }
+        }
+        
+        // Update appointment status
+        async function updateAppointmentStatus(appointmentId, status) {
+            try {
+                const response = await fetch(`/api/appointments/${appointmentId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({ status })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showSuccess('Appointment status updated successfully!');
+                    loadAppointments();
+                } else {
+                    showError(data.message);
+                }
+            } catch (error) {
+                showError('Failed to update appointment status.');
+            }
+        }
+        
+        // Show tab
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all nav tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        // Logout
+        function logout() {
+            authToken = null;
+            currentDoctor = null;
+            document.getElementById('loginContainer').style.display = 'block';
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('loginForm').reset();
+        }
+        
+        // Show error message
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Show success message
+        function showSuccess(message) {
+            const successDiv = document.getElementById('successMessage');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            setTimeout(() => {
+                successDiv.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

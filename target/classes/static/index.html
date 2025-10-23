@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Clinic Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 60px;
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+        }
+        
+        .logo {
+            margin-bottom: 40px;
+        }
+        
+        .logo h1 {
+            color: #333;
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        
+        .logo p {
+            color: #666;
+            font-size: 1.2em;
+        }
+        
+        .portals {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .portal-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 15px;
+            padding: 30px;
+            color: white;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .portal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        
+        .portal-card.admin {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .portal-card.doctor {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .portal-card.patient {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #333;
+        }
+        
+        .portal-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+        
+        .portal-card p {
+            font-size: 1em;
+            opacity: 0.9;
+        }
+        
+        .features {
+            margin-top: 50px;
+            text-align: left;
+        }
+        
+        .features h2 {
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .feature-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .feature-item h4 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .feature-item p {
+            color: #666;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <h1>🏥 Smart Clinic Management System</h1>
+            <p>Comprehensive Healthcare Management Solution</p>
+        </div>
+        
+        <div class="portals">
+            <a href="admin-portal.html" class="portal-card admin">
+                <h3>👨‍💼 Admin Portal</h3>
+                <p>Manage doctors, patients, and system settings</p>
+            </a>
+            
+            <a href="doctor-portal.html" class="portal-card doctor">
+                <h3>👨‍⚕️ Doctor Portal</h3>
+                <p>View appointments, manage patients, and prescriptions</p>
+            </a>
+            
+            <a href="patient-portal.html" class="portal-card patient">
+                <h3>👤 Patient Portal</h3>
+                <p>Book appointments, view medical records, and prescriptions</p>
+            </a>
+        </div>
+        
+        <div class="features">
+            <h2>System Features</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h4>🔐 Secure Authentication</h4>
+                    <p>JWT-based authentication for all user types</p>
+                </div>
+                <div class="feature-item">
+                    <h4>📅 Appointment Management</h4>
+                    <p>Schedule, manage, and track appointments</p>
+                </div>
+                <div class="feature-item">
+                    <h4>💊 Prescription System</h4>
+                    <p>Digital prescription management and tracking</p>
+                </div>
+                <div class="feature-item">
+                    <h4>👥 User Management</h4>
+                    <p>Manage doctors, patients, and admin users</p>
+                </div>
+                <div class="feature-item">
+                    <h4>📊 Reporting</h4>
+                    <p>Comprehensive reports and analytics</p>
+                </div>
+                <div class="feature-item">
+                    <h4>🔍 Search & Filter</h4>
+                    <p>Advanced search capabilities for all entities</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
